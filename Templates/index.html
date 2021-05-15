@@ -29,7 +29,7 @@
     {% if messages  %}
       {% for message in messages %}
             <div class="alert {% if message.tags == 'info' %} alert-info {% endif %} {% if message.tags == 'success' %} alert-success {% endif %}">
-              <button type="button" class="close" data-dismiss="alert" onclick="document.location.href='/';">&times;</button>
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
               {% if message.tags == 'info'  %}
                 <strong>Info!</strong>{{message}}
               {% endif %}
