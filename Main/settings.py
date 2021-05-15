@@ -26,7 +26,9 @@ SECRET_KEY = 'django-insecure-ykf&_higk-7%r0@f7dd2ris4-f@0vw(6ui+!44-j-w!aatcfc%
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    '*'
+    'localhost',
+    '127.0.0.1',
+    'thegenebox.herokuapp.com'
 ]
 
 
