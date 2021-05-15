@@ -1,0 +1,170 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-vue/2.18.1/bootstrap-vue.min.css" />
+
+    <title>TheGeneBox</title>
+    <style>
+      table tbody {
+        display: block;
+        max-height: 300px;
+        overflow-y: scroll;
+      }
+
+      table thead, table tbody tr {
+        display: table;
+        width: 100%;
+        table-layout: fixed;
+      }
+    </style>
+  </head>
+  <body>
+    {% if messages  %}
+      {% for message in messages %}
+            <div class="alert {% if message.tags == 'info' %} alert-info {% endif %} {% if message.tags == 'success' %} alert-success {% endif %}">
+              <button type="button" class="close" data-dismiss="alert" onclick="document.location.href='/';">&times;</button>
+              {% if message.tags == 'info'  %}
+                <strong>Info!</strong>{{message}}
+              {% endif %}
+              {% if message.tags == 'success' %}
+                <strong>success!</strong>{{message}}
+              {% endif %}
+            </div>
+      {% endfor %}
+    {% endif %}
+    <div class="d-flex justify-content-center p-2">
+      <!-- Button to Open the Modal -->
+      <button type="button" class="btn btn-primary m-2" data-toggle="modal" data-target="#myModalauthor">
+        Add authors
+      </button>
+      <!-- The Modal -->
+      <!-- Button to Open the Modal -->
+      <button type="button" class="btn btn-primary m-2" data-toggle="modal" data-target="#myModalbooks">
+        Add books
+      </button>
+      <!-- The Modal for Author -->
+      <div class="modal" id="myModalauthor">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+              <h4 class="modal-title">Add Author</h4>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div id="form-wrapper-1" class="modal-body">
+              <form id="form1" name="form1" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                  <label for="first-name" class="col-form-label">First Name</label>
+                  <input type="text" required class="form-control" name="first-name" id="first-name">
+                </div>
+                <div class="form-group">
+                  <label for="last-name" class="col-form-label">Last Name</label>
+                  <input type="text"  required class="form-control" name="last-name" id="last-name">
+                </div>
+                <button type="submit" id="submit-1" class="btn btn-primary">Add Author</button>
+              </form>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <!--./The Modal for Author -->
+
+
+      <!-- The Modal for books -->
+      <div class="modal" id="myModalbooks">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+              <h4 class="modal-title">Add Books</h4>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div id="form-wrapper-2" class="modal-body">
+              <form id="form2" name="form2" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                  <label for="book_name" class="col-form-label">Book Name</label>
+                  <input type="text" class="form-control" required name="book_name" id="book_name">
+                </div>
+                <div class="form-group">
+                  <label for="book_genre">Select Book Genre</label>
+                  <select class="form-control" required id="book_genre" name="book_genre">
+                    <option value="Action and Adventure" selected>Action and Adventure</option>
+                    <option value="Classics">Classics</option>
+                    <option value="Comic Book">Comic Book</option>
+                    <option value="Detective and Mystery">Detective and Mystery</option>
+                    <option value="Fantasy">Fantasy</option>
+                    <option value="Historical Fiction">Historical Fiction</option>
+                    <option value="Horror">Horror</option>
+                    <option value="Literary Fiction">Literary Fiction</option>
+                    <option value="Others">Others</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="auhtor_id">Select Author</label>
+                  <select required  class="form-control" id="auhtor_id" name="author_id">
+                    
+                  </select>
+                </div>
+                <button type="submit" id="submit-2" class="btn btn-primary">Add book</button>
+              </form>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <!--./-->
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="col align-self-center">
+          <input class="form-control mb-2" id="myInput" type="text" placeholder="Search..">
+          <table id="table" class="table table-bordered">
+          </table>
+        </div>
+      </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="{% static 'js/cookies.js' %}"></script>
+    <script src="{% static 'js/addauthors.js' %}"></script>
+    <script src="{% static 'js/addbooks.js' %}"></script>
+    <!-- this code load all author without refesh page-->
+    <script  src="{% static 'js/showallauthors.js' %}"></script>
+    <!--./-->
+
+
+    <!-- this code load table without refesh page-->
+    <script src="{% static 'js/table.js' %}"></script>
+    <!--./-->
+
+    <!-- table search functionality-->
+    <script src="{% static 'js/search.js' %}"></script>
+    <!--./end search -->
+  </body>
+</html>

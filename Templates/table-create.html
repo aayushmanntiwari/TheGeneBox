@@ -1,0 +1,22 @@
+<thead>
+    <tr>
+      <th>Authors Names</th>
+      <th>Books</th>
+    </tr>
+  </thead>
+  <tbody id="myTable">
+    {% for author in authors %}
+      <tr>
+        <td>{{author.first_name}} {{author.last_name}}</td>
+        <td>
+          <ul style="max-height: 100px; overflow-y: auto;">
+            {% for book in  books %}
+              {% if author.id == book.author_id and book.book_name is not None %}
+                <li>{{book.book_name}}</li>
+              {% endif %}
+            {% endfor %}
+          </ul>
+        </td>
+      </tr>
+    {% endfor %}
+</tbody>
